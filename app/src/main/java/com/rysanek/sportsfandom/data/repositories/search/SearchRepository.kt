@@ -19,7 +19,9 @@ interface SearchRepository {
 
     suspend fun updateTeams(teams: List<SearchEntity>)
 
-    fun getTeamsInfoFromDbLiveData(): LiveData<List<SearchEntity>>
+    fun getSearchResultsFromDbLiveData(): LiveData<List<SearchEntity>>
+
+    fun getSearchResults(): List<SearchEntity>
 
     // Remote
     fun hasInternetConnection(context: Context): Boolean

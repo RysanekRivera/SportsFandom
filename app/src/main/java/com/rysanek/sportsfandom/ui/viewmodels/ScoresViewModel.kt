@@ -2,9 +2,12 @@ package com.rysanek.sportsfandom.ui.viewmodels
 
 import android.util.Log
 import android.widget.ImageView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rysanek.sportsfandom.data.repositories.scores.ScoresRepositoryImpl
+import com.rysanek.sportsfandom.domain.usecases.FetchScores
+import com.rysanek.sportsfandom.domain.utils.DownloadState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,49 +18,53 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScoresViewModel @Inject constructor(
-    private val repository: ScoresRepositoryImpl
+    private val fetchScores: FetchScores
 ) : ViewModel() {
 
+    private val _downloadState = MutableLiveData<DownloadState>(DownloadState.Idle)
+    val downloadState: LiveData<DownloadState> = _downloadState
     private var timerTask: TimerTask? = null
     private var timer: Timer? = null
 
-    fun getScores() = repository.getScoresFromDbLiveData()
+    fun getScores() = fetchScores.getScoresLiveData()
+
+    fun postDownloadState(state: DownloadState) { _downloadState.postValue(state) }
 
     fun fetchScores() = viewModelScope.launch(Dispatchers.IO) {
         Log.d("TeamsViewModel", "Fetch Started")
-        repository.fetchScores()
-            .catch { e -> Log.e("TeamsViewmodel", "Error Downloading: ${e.message}") }
-            .map { scoresList ->
+        postDownloadState(DownloadState.Downloading)
 
-                if(!scoresList.events.isNullOrEmpty()) {
-                    val scoresValue = repository.getScoresFromDb().size
+        fetchScores.startFetch()
+            .catch { e -> postDownloadState(DownloadState.Error.message(e.message)) }
+            .map { scoresDTOList ->
+                if (!scoresDTOList.scores.isNullOrEmpty())
+                scoresDTOList.scores.map { dto -> dto.toScoreEntity() }
+                else emptyList()
+            }
+            .onCompletion { postDownloadState(DownloadState.Finished) }
+            .collect { scoresList ->
+                if(!scoresList.isNullOrEmpty()) {
+                    val scoresValue = fetchScores.getScoresListSize()
 
                     if (scoresValue <= 0) {
-                        repository.deleteAllScoresFromDb()
-                        repository.insertScoresToDb( scoresList.events.map { dto -> dto.toScoreEntity() })
+                        fetchScores.deleteAllScores()
+                        fetchScores.insertScores(scoresList)
                     } else {
                         Log.d("ScoresViewModel", "updating score values")
-                        repository.updateScores(scoresList.events.map { dto -> dto.toScoreEntity() })
+                        fetchScores.updateScores(scoresList)
                     }
                 }
 
                 startReFetchTask()
-
-                Log.d("ViewModel", "Response: ${scoresList.events}")
             }
-            .collect()
     }
 
     fun loadImagesToView(url: String, imageView: ImageView) = viewModelScope.launch(Dispatchers.Main) {
-        repository.loadImagesToView(url, imageView)
+        fetchScores.loadImages(url, imageView)
     }
 
     private fun startReFetchTask(): Job = viewModelScope.launch(Dispatchers.IO) {
-        timerTask = object: TimerTask(){
-            override fun run() {
-                fetchScores()
-            }
-        }
+        timerTask = object: TimerTask(){ override fun run() { fetchScores() } }
 
         timer = Timer()
         timer?.schedule(timerTask, 120000)
@@ -67,8 +74,6 @@ class ScoresViewModel @Inject constructor(
         timerTask?.cancel()
         timerTask = null
         timer = null
-
-        Log.d("ScoresViewModel", "cancelled: Timer Task - $timerTask, Timer - $timer ")
     }
 
 }

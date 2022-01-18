@@ -1,17 +1,14 @@
 package com.rysanek.sportsfandom.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rysanek.sportsfandom.data.local.entities.ScoresEntity
-import com.rysanek.sportsfandom.data.local.entities.SearchEntity
 import com.rysanek.sportsfandom.databinding.SingleScoreLayoutBinding
 import com.rysanek.sportsfandom.domain.utils.ListsDiffUtil
 import com.rysanek.sportsfandom.domain.utils.gone
 import com.rysanek.sportsfandom.domain.utils.show
 import com.rysanek.sportsfandom.ui.viewmodels.ScoresViewModel
-import com.rysanek.sportsfandom.ui.viewmodels.SearchViewModel
 
 class ScoresAdapter(
     private val viewModel: ScoresViewModel
@@ -51,12 +48,26 @@ class ScoresAdapter(
             binding.tvDate.text = scores.dateEvent
             binding.tvTime.text = scores.strEventTime
             binding.tvStatus.text = status
-            if (status.equals("NS")){
-                binding.tvStatus.gone()
 
+            if (status.equals("NS"))binding.tvStatus.gone()
+            else binding.tvStatus.show()
+
+            if (progress.equals("Final")) {
+                when {
+                    scores.intHomeScore?.toInt() ?: 0 > scores.intAwayScore?.toInt() ?: 0 -> {
+                        binding.ivArrowHomeTeam.show()
+                    }
+                    scores.intHomeScore?.toInt() ?: 0 < scores.intAwayScore?.toInt() ?: 0 -> {
+                        binding.ivArrowAwayTeam.show()
+                    }
+                    else -> {
+                        binding.ivArrowHomeTeam.show()
+                        binding.ivArrowAwayTeam.show()
+                    }
+                }
             } else {
-
-                binding.tvStatus.show()
+                binding.ivArrowHomeTeam.gone()
+                binding.ivArrowAwayTeam.gone()
             }
         }
     }

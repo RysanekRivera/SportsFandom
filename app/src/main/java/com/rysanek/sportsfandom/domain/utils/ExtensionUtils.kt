@@ -2,16 +2,19 @@ package com.rysanek.sportsfandom.domain.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.rysanek.sportsfandom.R
 
 /**
@@ -49,15 +52,23 @@ fun Activity.fullScreenMode(){
  * @return [Boolean] - Whether or not there is an active connection.
  * */
 fun Context.hasInternetConnection(): Boolean {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
     val activeNetwork = connectivityManager.activeNetwork ?: return false
     val network = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-    
+
     return when {
         network.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
         network.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
         else -> false
     }
+}
+
+fun Fragment.hasInternetConnection(): Boolean {
+    return requireContext().hasInternetConnection()
+}
+
+fun Fragment.showSnackbar(message: String, length: Int = Snackbar.LENGTH_SHORT){
+    Snackbar.make(requireView(), message, length).show()
 }
 
 /**

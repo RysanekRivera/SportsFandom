@@ -18,6 +18,9 @@ interface SearchDAO {
     @Query("SELECT * FROM $SEARCH_TABLE")
     fun getTeamsFromDbLiveData(): LiveData<List<SearchEntity>>
 
+    @Query("SELECT * FROM $SEARCH_TABLE")
+    fun getTeamsFromDb(): List<SearchEntity>
+
     @Query("SELECT * FROM $SEARCH_TABLE WHERE strTeam LIKE '%' || :team || '%'")
     fun getTeamsInfo(team: String): List<SearchEntity>
 

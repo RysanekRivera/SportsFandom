@@ -27,8 +27,10 @@ class SearchRepositoryImpl @Inject constructor(
     
     override suspend fun deleteAllTeamsFromDb() = dao.deleteAllTeamsFromDb()
     
-    override fun getTeamsInfoFromDbLiveData(): LiveData<List<SearchEntity>> = dao.getTeamsFromDbLiveData()
-    
+    override fun getSearchResultsFromDbLiveData(): LiveData<List<SearchEntity>> = dao.getTeamsFromDbLiveData()
+
+    override fun getSearchResults(): List<SearchEntity> = dao.getTeamsFromDb()
+
     override fun hasInternetConnection(context: Context) = context.hasInternetConnection()
 
     override fun loadImagesToView(imageUrl: String, imageView: ImageView) {

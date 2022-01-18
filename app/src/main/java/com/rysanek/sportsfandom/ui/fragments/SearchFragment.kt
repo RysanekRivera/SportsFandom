@@ -2,7 +2,6 @@ package com.rysanek.sportsfandom.ui.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ class SearchFragment: Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var rvAdapter: SearchAdapter
-    private val viewModel: SearchViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
     private val teamsViewModel: TeamsViewModel by viewModels()
     private val searchView: SearchView by lazy { requireActivity().findViewById(R.id.searchView) }
 
@@ -37,35 +36,17 @@ class SearchFragment: Fragment() {
 
         setupRecyclerView()
 
-        viewModel.getTeamsInfo().observe(viewLifecycleOwner) { teams ->
-            val list = teams ?: mutableListOf()
-            rvAdapter.setData(list as MutableList)
+        searchViewModel.getTeamsInfo().observe(viewLifecycleOwner) { teams ->
+            rvAdapter.setData(teams as MutableList)
         }
 
-        val queryTextListener: SearchView.OnQueryTextListener = object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("SearchFragment", "Query: $query")
-
-                hideKeyboard()
-
-                return false
-            }
-
-            override fun onQueryTextChange(query: String?): Boolean {
-                Log.d("SearchFragment", "Query: $query")
-                if (query != null) viewModel.fetchTeams(query)
-
-                return false
-            }
-        }
-
-        searchView.setOnQueryTextListener(queryTextListener)
+        searchView.setOnQueryTextListener(provideOnQueryTextListener())
 
         return binding.root
     }
 
     private fun setupRecyclerView(){
-        rvAdapter = SearchAdapter(viewModel, teamsViewModel)
+        rvAdapter = SearchAdapter(searchViewModel, teamsViewModel)
 
         rvAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
@@ -75,6 +56,22 @@ class SearchFragment: Fragment() {
             val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2
 
             layoutManager = GridLayoutManager(requireContext(), spanCount)
+        }
+    }
+
+    private fun provideOnQueryTextListener() = object: SearchView.OnQueryTextListener{
+        override fun onQueryTextSubmit(query: String?): Boolean {
+
+            hideKeyboard()
+
+            return false
+        }
+
+        override fun onQueryTextChange(query: String?): Boolean {
+
+            if (query != null) searchViewModel.fetchTeams(query)
+
+            return false
         }
     }
 

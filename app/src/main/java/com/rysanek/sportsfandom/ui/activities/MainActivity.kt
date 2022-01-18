@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.rysanek.sportsfandom.R
 import com.rysanek.sportsfandom.databinding.ActivityMainBinding
+import com.rysanek.sportsfandom.databinding.FragmentSearchBinding
 import com.rysanek.sportsfandom.domain.utils.fullScreenMode
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +45,9 @@ class MainActivity: AppCompatActivity() {
 
     private fun setupSearchView() {
         binding.searchView.setOnSearchClickListener {
-            navController.navigate(R.id.searchFragment)
+            if (R.id.searchFragment != navController.currentDestination?.id ?: -1) {
+                navController.navigate(R.id.searchFragment)
+            }
         }
 
         binding.searchView.setOnCloseListener {

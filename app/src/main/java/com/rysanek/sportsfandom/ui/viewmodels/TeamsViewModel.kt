@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rysanek.sportsfandom.data.local.entities.TeamEntity
 import com.rysanek.sportsfandom.data.repositories.teams.TeamsRepositoryImpl
+import com.rysanek.sportsfandom.domain.usecases.LoadTeams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,21 +13,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamsViewModel @Inject constructor(
-    private val repository: TeamsRepositoryImpl
+    private val loadTeams: LoadTeams
 ) : ViewModel() {
 
-    fun getTeamsInfo() = repository.getTeamsInfoFromDbLiveData()
+    fun getTeamsInfo() = loadTeams.getTeamsInfo()
 
     fun loadImagesToView(url: String, imageView: ImageView) = viewModelScope.launch(Dispatchers.Main) {
-        repository.loadImagesToView(url, imageView)
+        loadTeams.loadImagesToView(url, imageView)
     }
 
     fun saveTeamToDb(team: TeamEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insertTeamToDb(team)
+        loadTeams.saveTeamToDb(team)
     }
 
-    fun deleteTeamFromDb(team: TeamEntity) = viewModelScope.launch {
-        repository.deleteTeamFromDb(team)
+    fun deleteTeamFromDb(team: TeamEntity) = viewModelScope.launch(Dispatchers.IO) {
+        loadTeams.deleteTeamFromDb(team)
     }
 
 }

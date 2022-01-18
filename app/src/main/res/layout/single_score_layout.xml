@@ -168,6 +168,28 @@
                 app:layout_constraintEnd_toStartOf="@+id/tvDate"
                 app:layout_constraintTop_toTopOf="@+id/tvDate"
                 tools:text="Wed" />
+
+            <ImageView
+                android:id="@+id/ivArrowHomeTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tvHomeTeamScore"
+                app:layout_constraintStart_toEndOf="@+id/tvHomeTeamScore"
+                app:layout_constraintTop_toTopOf="@+id/tvHomeTeamScore"
+                app:srcCompat="@drawable/ic_arrow_left"
+                app:tint="@color/red" />
+
+            <ImageView
+                android:id="@+id/ivArrowAwayTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAwayTeamScore"
+                app:layout_constraintEnd_toStartOf="@+id/tvAwayTeamScore"
+                app:layout_constraintTop_toTopOf="@+id/tvAwayTeamScore"
+                app:srcCompat="@drawable/ic_arrow_right"
+                app:tint="@color/red"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
