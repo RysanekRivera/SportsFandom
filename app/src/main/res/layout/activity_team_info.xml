@@ -66,9 +66,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    tools:text="TextView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivTeamBadge" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivTeamBadge"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/tvSportType"
@@ -87,10 +87,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    tools:text="TextView"
                     app:layout_constraintBottom_toBottomOf="@+id/tvSportType"
                     app:layout_constraintStart_toEndOf="@+id/tvSportType"
-                    app:layout_constraintTop_toTopOf="@+id/tvSportType" />
+                    app:layout_constraintTop_toTopOf="@+id/tvSportType"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/tvCountry"
@@ -108,10 +108,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    tools:text="TextView"
                     app:layout_constraintBottom_toBottomOf="@+id/tvCountry"
                     app:layout_constraintStart_toEndOf="@+id/tvCountry"
-                    app:layout_constraintTop_toTopOf="@+id/tvCountry" />
+                    app:layout_constraintTop_toTopOf="@+id/tvCountry"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/tvLeagues"
@@ -131,12 +131,12 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:maxLines="5"
-                    tools:text="TextView"
                     app:layout_constraintBottom_toBottomOf="@+id/tvLeagues"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/tvLeagues"
-                    app:layout_constraintTop_toTopOf="@+id/tvLeagues" />
+                    app:layout_constraintTop_toTopOf="@+id/tvLeagues"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/tvDescription"
@@ -202,12 +202,13 @@
                 <ImageView
 
                     android:id="@+id/ivTeamArt1"
-                    android:layout_width="175dp"
-                    android:layout_height="175dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivTeamLogo"
+                    app:layout_constraintTop_toBottomOf="@+id/adView"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
                 <ImageView
@@ -253,6 +254,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivTeamArt4"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:adSize="BANNER"
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivTeamLogo" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

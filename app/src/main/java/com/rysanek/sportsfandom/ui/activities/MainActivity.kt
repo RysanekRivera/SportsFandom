@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.rysanek.sportsfandom.R
 import com.rysanek.sportsfandom.databinding.ActivityMainBinding
 import com.rysanek.sportsfandom.databinding.FragmentSearchBinding
@@ -23,6 +24,8 @@ class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fullScreenMode()
+
+        startAds()
 
         super.onCreate(savedInstanceState)
 
@@ -56,5 +59,9 @@ class MainActivity: AppCompatActivity() {
             navController.popBackStack(R.id.searchFragment, true)
             false
         }
+    }
+
+    private fun startAds(){
+        MobileAds.initialize(this)
     }
 }

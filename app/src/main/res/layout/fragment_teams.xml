@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:minLines="4"
-        android:text="click the search image\nlook for your favorite teams\nand long click to save your teams here."
+        android:text="@string/teams_fragment_instructions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

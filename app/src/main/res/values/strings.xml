@@ -2,4 +2,5 @@
     <string name="app_name">SportsFandom</string>
     <string name="title_activity_videos">VideosActivity</string>
     <string name="no_internet">No Internet Connection!</string>
+    <string name="teams_fragment_instructions">click the search image\nlook for your favorite teams\nand long click to save your teams here.</string>
 </resources>
