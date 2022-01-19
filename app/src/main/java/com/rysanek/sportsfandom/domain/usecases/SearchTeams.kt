@@ -8,6 +8,8 @@ import javax.inject.Inject
 class SearchTeams @Inject constructor(
     private val repository: SearchRepositoryImpl
 ) {
+    fun getSearchData(teamName: String) = repository.getTeamData(teamName)
+
     suspend fun startFetch(teamName: String) =  repository.fetchTeams(teamName)
 
     suspend fun insertTeams(teams: List<SearchEntity>) = repository.insertTeamToDb(teams)

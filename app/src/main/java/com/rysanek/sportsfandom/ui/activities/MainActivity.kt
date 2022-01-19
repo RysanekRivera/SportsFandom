@@ -36,6 +36,8 @@ class MainActivity: AppCompatActivity() {
 
         setupSearchView()
 
+        setTheme(R.style.Theme_SportsFandom)
+
         setContentView(binding.root)
     }
 

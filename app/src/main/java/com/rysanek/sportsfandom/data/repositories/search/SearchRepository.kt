@@ -15,6 +15,8 @@ interface SearchRepository {
 
     suspend fun insertTeamToDb(teams: List<SearchEntity>)
 
+    fun getTeamData(teamName: String): List<SearchEntity>
+
     suspend fun deleteAllTeamsFromDb()
 
     suspend fun updateTeams(teams: List<SearchEntity>)

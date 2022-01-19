@@ -1,8 +1,10 @@
 package com.rysanek.sportsfandom.ui.adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.rysanek.sportsfandom.data.local.entities.SearchEntity
@@ -10,6 +12,8 @@ import com.rysanek.sportsfandom.data.local.entities.TeamEntity
 import com.rysanek.sportsfandom.databinding.SingleSearchLayoutBinding
 import com.rysanek.sportsfandom.databinding.SingleTeamLayoutBinding
 import com.rysanek.sportsfandom.domain.utils.ListsDiffUtil
+import com.rysanek.sportsfandom.ui.activities.TeamInfoActivity
+import com.rysanek.sportsfandom.ui.fragments.TeamsFragmentDirections
 import com.rysanek.sportsfandom.ui.viewmodels.SearchViewModel
 import com.rysanek.sportsfandom.ui.viewmodels.TeamsViewModel
 
@@ -51,6 +55,11 @@ class TeamsAdapter(
             viewModel.deleteTeamFromDb(team)
             Snackbar.make(it, "Deleted: ${team.strTeam}", Snackbar.LENGTH_SHORT).show()
             true
+        }
+
+        holder.itemView.setOnClickListener {
+            val navActions = TeamsFragmentDirections.actionTeamsFragmentToTeamInfoActivity(team)
+            it.findNavController().navigate(navActions)
         }
     }
 

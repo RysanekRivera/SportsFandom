@@ -1,11 +1,15 @@
 package com.rysanek.sportsfandom.data.local.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.rysanek.sportsfandom.domain.utils.Constants.SEARCH_TABLE
 import com.rysanek.sportsfandom.domain.utils.Constants.TEAMS_TABLE
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = TEAMS_TABLE)
 data class TeamEntity(
     val idAPIfootball: String?,
@@ -71,7 +75,8 @@ data class TeamEntity(
     val strTwitter: String?,
     val strWebsite: String?,
     val strYoutube: String?
-){
+): Parcelable {
+    @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
 }

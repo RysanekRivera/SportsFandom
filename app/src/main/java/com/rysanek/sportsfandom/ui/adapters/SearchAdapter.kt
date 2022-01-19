@@ -1,14 +1,14 @@
 package com.rysanek.sportsfandom.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.rysanek.sportsfandom.data.local.entities.SearchEntity
-import com.rysanek.sportsfandom.data.local.entities.TeamEntity
 import com.rysanek.sportsfandom.databinding.SingleSearchLayoutBinding
 import com.rysanek.sportsfandom.domain.utils.ListsDiffUtil
+import com.rysanek.sportsfandom.ui.fragments.SearchFragmentDirections
 import com.rysanek.sportsfandom.ui.viewmodels.SearchViewModel
 import com.rysanek.sportsfandom.ui.viewmodels.TeamsViewModel
 
@@ -26,6 +26,7 @@ class SearchAdapter(
 
             fun from(parent: ViewGroup): TeamsViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
+
                 val binding = SingleSearchLayoutBinding.inflate(layoutInflater, parent, false)
 
                 return TeamsViewHolder(binding)
@@ -33,10 +34,10 @@ class SearchAdapter(
         }
 
         fun bind(team: SearchEntity, viewModel: SearchViewModel) {
-            team.strTeamBadge?.let { imageUrl -> viewModel.loadImagesToView(imageUrl, binding.ivTeamPic) }
-            Log.d("Image", "ImageUrl: ${team.strTeamBadge}")
-            binding.tvTeamName.text = team.strTeam
 
+            team.strTeamBadge?.let { imageUrl -> viewModel.loadImagesToView(imageUrl, binding.ivTeamPic) }
+
+            binding.tvTeamName.text = team.strTeam
         }
     }
 
@@ -51,6 +52,11 @@ class SearchAdapter(
             teamsViewModel.saveTeamToDb(team.toTeamEntity())
             Snackbar.make(it, "Saved: ${team.strTeam}", Snackbar.LENGTH_SHORT).show()
             true
+        }
+
+        holder.itemView.setOnClickListener {
+            val navActions = SearchFragmentDirections.actionSearchFragmentToTeamInfoActivity(team.toTeamEntity())
+            it.findNavController().navigate(navActions)
         }
     }
 

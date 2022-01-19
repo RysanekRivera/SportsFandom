@@ -14,9 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SportsFandom.NoActionBar">
+    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:screenOrientation">portrait</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/sports_fandom_splash_screen</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
 </resources>

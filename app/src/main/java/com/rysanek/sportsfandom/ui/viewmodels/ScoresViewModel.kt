@@ -31,12 +31,13 @@ class ScoresViewModel @Inject constructor(
     fun postDownloadState(state: DownloadState) { _downloadState.postValue(state) }
 
     fun fetchScores() = viewModelScope.launch(Dispatchers.IO) {
-        Log.d("TeamsViewModel", "Fetch Started")
+
         postDownloadState(DownloadState.Downloading)
 
         fetchScores.startFetch()
             .catch { e -> postDownloadState(DownloadState.Error.message(e.message)) }
             .map { scoresDTOList ->
+
                 if (!scoresDTOList.scores.isNullOrEmpty())
                 scoresDTOList.scores.map { dto -> dto.toScoreEntity() }
                 else emptyList()
@@ -50,7 +51,6 @@ class ScoresViewModel @Inject constructor(
                         fetchScores.deleteAllScores()
                         fetchScores.insertScores(scoresList)
                     } else {
-                        Log.d("ScoresViewModel", "updating score values")
                         fetchScores.updateScores(scoresList)
                     }
                 }

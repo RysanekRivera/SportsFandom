@@ -23,6 +23,8 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun updateTeams(teams: List<SearchEntity>) = dao.updateTeams(teams)
 
+    override fun getTeamData(teamName: String): List<SearchEntity> = dao.getTeamsInfo(teamName)
+
     override suspend fun insertTeamToDb(teams: List<SearchEntity>) = dao.insertTeamsListIntoDb(teams)
     
     override suspend fun deleteAllTeamsFromDb() = dao.deleteAllTeamsFromDb()
