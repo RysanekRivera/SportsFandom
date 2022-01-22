@@ -22,10 +22,10 @@ object Constants {
 
     const val SEARCH_SERIAL_NAME = "teams"
 
+    const val VIDEOS_SERIAL_NAME = "tvhighlights"
+
     const val SCORE_SCROLL_POSITION = "score_scroll_position"
 
     const val TEAMS_SCROLL_POSITION = "teams_scroll_position"
-
-    const val SEARCH_SCROLL_POSITION = "search_scroll_position"
 
 }

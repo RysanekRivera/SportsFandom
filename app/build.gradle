@@ -24,6 +24,7 @@ android {
 
         debug {
             buildConfigField 'String', "SPORTS_KEY", SPORTS_KEY
+            buildConfigField 'String', "YT_KEY", YT_KEY
         }
 
         release {
@@ -97,8 +98,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
 
-    //admob
+    // Admob
     implementation 'com.google.android.gms:play-services-ads:20.5.0'
+
+    // YouTube API
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
 
 }
 

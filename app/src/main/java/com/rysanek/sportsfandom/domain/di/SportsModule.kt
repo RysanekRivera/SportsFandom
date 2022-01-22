@@ -12,6 +12,7 @@ import com.rysanek.sportsfandom.data.local.db.teams.TeamsDAO
 import com.rysanek.sportsfandom.data.local.db.teams.TeamsDatabase
 import com.rysanek.sportsfandom.data.remote.apis.ScoresAPI
 import com.rysanek.sportsfandom.data.remote.apis.SearchAPI
+import com.rysanek.sportsfandom.data.remote.apis.VideosAPI
 import com.rysanek.sportsfandom.domain.glide.GlideApp
 import com.rysanek.sportsfandom.domain.utils.Constants.BASE_URL
 import com.rysanek.sportsfandom.domain.utils.Constants.SCORES_DATABASE
@@ -62,6 +63,17 @@ object SportsModule {
         .client(okHttpClient)
         .build()
         .create(ScoresAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideVideosAPI(
+        okHttpClient: OkHttpClient
+    ): VideosAPI = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(okHttpClient)
+        .build()
+        .create(VideosAPI::class.java)
 
     @Provides
     @Singleton

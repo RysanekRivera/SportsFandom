@@ -37,5 +37,14 @@
         <argument android:name="TeamEntity"
             app:argType="com.rysanek.sportsfandom.data.local.entities.TeamEntity" />
     </activity>
+    <activity
+        android:id="@+id/videoHighlights"
+        android:name="com.rysanek.sportsfandom.ui.activities.VideoHighlights"
+        android:label="activity_video_highlights"
+        tools:layout="@layout/activity_video_highlights" />
+    <activity
+        android:id="@+id/videoPlayer"
+        android:name="com.rysanek.sportsfandom.ui.activities.VideoPlayer"
+        android:label="VideoPlayer" />
 
 </navigation>

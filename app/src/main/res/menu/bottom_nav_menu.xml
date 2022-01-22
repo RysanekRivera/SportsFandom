@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_live_scores"
         android:title="Scores" />
 
+    <item android:id="@+id/videoHighlights"
+        android:icon="@drawable/ic_videos"
+        android:title="Videos" />
+
     <item android:id="@+id/teamsFragment"
         android:icon="@drawable/ic_newspaper"
         android:title="Teams" />

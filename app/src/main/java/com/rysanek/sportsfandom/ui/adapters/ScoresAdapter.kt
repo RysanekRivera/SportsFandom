@@ -44,26 +44,24 @@ class ScoresAdapter(
             val progress = scores.strProgress
 
             binding.tvProgress.text = progress
-
+            binding.tvStatus.text = status
             binding.tvDate.text = scores.dateEvent
             binding.tvTime.text = scores.strEventTime
-            binding.tvStatus.text = status
 
             if (status.equals("NS"))binding.tvStatus.gone()
             else binding.tvStatus.show()
 
-            if (progress.equals("Final")) {
+            if (progress.equals("Final") || status.equals("FT") || status.equals("AOT") || status.equals("AP")) {
                 when {
                     scores.intHomeScore?.toInt() ?: 0 > scores.intAwayScore?.toInt() ?: 0 -> {
                         binding.ivArrowHomeTeam.show()
+                        binding.ivArrowAwayTeam.gone()
                     }
                     scores.intHomeScore?.toInt() ?: 0 < scores.intAwayScore?.toInt() ?: 0 -> {
                         binding.ivArrowAwayTeam.show()
+                        binding.ivArrowHomeTeam.gone()
                     }
-                    else -> {
-                        binding.ivArrowHomeTeam.show()
-                        binding.ivArrowAwayTeam.show()
-                    }
+                    else -> { /*NO-OP*/ }
                 }
             } else {
                 binding.ivArrowHomeTeam.gone()

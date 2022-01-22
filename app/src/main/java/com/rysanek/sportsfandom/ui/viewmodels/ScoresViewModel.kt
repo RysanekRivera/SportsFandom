@@ -1,6 +1,5 @@
 package com.rysanek.sportsfandom.ui.viewmodels
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,9 @@ import com.rysanek.sportsfandom.domain.utils.DownloadState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -44,16 +45,18 @@ class ScoresViewModel @Inject constructor(
             }
             .onCompletion { postDownloadState(DownloadState.Finished) }
             .collect { scoresList ->
-                if(!scoresList.isNullOrEmpty()) {
-                    val scoresValue = fetchScores.getScoresListSize()
-
-                    if (scoresValue <= 0) {
-                        fetchScores.deleteAllScores()
-                        fetchScores.insertScores(scoresList)
-                    } else {
-                        fetchScores.updateScores(scoresList)
-                    }
-                }
+                fetchScores.insertScores(scoresList)
+//                if(!scoresList.isNullOrEmpty()) {
+//
+//                    val scoresValue = fetchScores.getScoresListSize()
+//
+//                    if (scoresValue <= 0) {
+//                        fetchScores.deleteAllScores()
+//                        fetchScores.insertScores(scoresList)
+//                    } else {
+//                        fetchScores.updateScores(scoresList)
+//                    }
+//                }
 
                 startReFetchTask()
             }
